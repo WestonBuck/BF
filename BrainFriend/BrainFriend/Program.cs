@@ -22,28 +22,28 @@ namespace BrainFriend
 
         static void interpret(string s)
         {
-            //string myName = "+[--->++<]>+.++[->++++<]>+.[--->+<]>----.+.-----.-.-[->+++++<]>-.+[->++<]>.++[----->+<]>+.+[->+++<]>+.++++++++.";
+            //string myName = "";
             char[] code;
             code = s.ToCharArray();
             int[] tape = new int[100000];
             int memoryPointer = 0, instructionPointer = 0;
 
-            while (instructionPointer < code.Length)
+            while (instructionPointer < s.Length)
             {
-                switch (code[instructionPointer])
+                switch (s[instructionPointer])
                 {
                     case '>':
                         memoryPointer++;
-                        if (memoryPointer == 256)
+                        if (memoryPointer == 100001)
                         {
                             memoryPointer = 0;
                         }
                         break;
                     case '<':
                         memoryPointer--;
-                        if (memoryPointer <= 0)
+                        if (memoryPointer < 0)
                         {
-                            memoryPointer = 255;
+                            memoryPointer = 100000;
                         }
                         break;
                     case '+':
@@ -52,53 +52,46 @@ namespace BrainFriend
                     case '-':
                         tape[memoryPointer]--;
                         break;
-                        
-                    // check for new loops and increment counter or decrement if needed.
+
+
                     case '[':
-                        if (tape[memoryPointer]==0)
+                        if (tape[memoryPointer] == 0)
                         {
-                            int LoopCount = 0;
-                            int tempPointer = instructionPointer + 1;
-                            while (code[tempPointer] != ']' || LoopCount >0)
+                            int LoopCount = 1;
+                            while (LoopCount > 0)
                             {
-                                if (code[tempPointer] == '[')
+                                instructionPointer++;
+                                char c = s[instructionPointer];
+                                if (c == '[')
                                 {
                                     LoopCount++;
                                 }
-                                else if (code[tempPointer] == ']')
+                                else if (c == ']')
                                 {
                                     LoopCount--;
                                 }
-
-                                tempPointer++;
-                                instructionPointer = tempPointer;
                             }
-                            break;
                         }
                         break;
-
                     case ']':
-                        if (tape[memoryPointer] != 0)
-                        {
-                            int LoopCount = 0;
-                            int tempPointer = instructionPointer - 1;
-                            while (code[tempPointer] != '[' || LoopCount > 0)
+                        { 
+                            int LoopCount = 1;
+                            while (LoopCount > 0)
                             {
-                                if (code[tempPointer] == ']')
-                                {
-                                    LoopCount++;
-                                }
-                                else if (code[tempPointer] == '[')
+                                instructionPointer--;
+                                char c = s[instructionPointer];
+                                if (c == '[')
                                 {
                                     LoopCount--;
                                 }
-
-                                tempPointer--;
-                                instructionPointer = tempPointer;
+                                else if (c == ']')
+                                {
+                                    LoopCount++;
+                                }
                             }
+                            instructionPointer--;
                             break;
                         }
-                        break;
                     case ',':
                         tape[memoryPointer] = Console.Read();
                         break;
