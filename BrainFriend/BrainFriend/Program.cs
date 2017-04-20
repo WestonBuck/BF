@@ -21,7 +21,7 @@ namespace BrainFriend
 
             if (args.Length == 0)
             {
-                Console.WriteLine("no command line argumaents found...");
+                Console.WriteLine("no command line arguments found...");
                 Console.WriteLine("Please enter your BF code  here instead:");
                 inputFile = Console.ReadLine();
             }
