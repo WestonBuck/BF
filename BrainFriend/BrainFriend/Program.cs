@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Weston Buck
+// 04/20/17
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +13,7 @@ namespace BrainFriend
     class Program
     {
         
+        //get args so we can use a text file, if not using args, ask for input. Once we have either a text file or user input, start to interpret the BF code.
         static void Main(string[] args)
         {
             
@@ -87,6 +91,9 @@ namespace BrainFriend
                             }
                         }
                         break;
+
+                        // When hitting a ] character, go back and decerement the pointer until you get to the original [
+                        // and then decrement spot in memory.
                     case ']':
                         { 
                             int LoopCount = 1;
